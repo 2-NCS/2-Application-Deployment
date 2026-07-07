@@ -1,0 +1,37 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.5'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.example'
+version = '1.0.0'
+description = 'S-Deploy : 애플리케이션 배포 EX'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+// TODO(배포 환경 구성): 실행 JAR 이 항상 'app.jar' 로 생성되도록 bootJar 를 설정하시오.
+//  - 배포 스크립트(scripts/*.sh)가 build/libs/app.jar 를 참조한다.
+bootJar {
+	// TODO: archiveFileName 을 지정하시오
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
