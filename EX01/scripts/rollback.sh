@@ -15,4 +15,6 @@ if [ ! -f "$PREV" ]; then
 fi
 
 # TODO(롤백/원복): 보관된 이전 버전($PREV)을 배포 대상($JAR)으로 복사하여 되돌리시오.
-echo "==> (TODO) 롤백 후 scripts/run.sh 로 재실행하고 /api/version 으로 이전 버전인지 확인하세요."
+cp "$PREV" "$JAR"
+echo "==> 롤백 완료: $PREV -> $JAR"
+echo "==> scripts/run.sh 로 재실행하고 /api/version 으로 이전 버전인지 확인하세요."
