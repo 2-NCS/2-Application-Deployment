@@ -17,7 +17,7 @@ fi
 
   # TODO(릴리스 보관): 롤백에 대비해 build/libs/app.jar 를 releases/app-<version>.jar 로 복사하시오.
 #  - version 은 build.gradle 의 version 값을 사용
-#ls build/libs/app.jar
-#mkdir -p releases
-#cp build/libs/app.jar releases/app-1.0.0.jar
+ls build/libs/app.jar
+mkdir -p releases
+cp build/libs/app.jar releases/app-1.0.0.jar
 
