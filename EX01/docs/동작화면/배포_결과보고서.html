@@ -15,9 +15,11 @@
   .lbl { background: #f4f4f4; font-weight: 600; text-align: center; white-space: nowrap; }
   .sec { font-size: 14px; font-weight: 700; margin: 24px 0 8px; border-left: 4px solid #3a3a3a; padding-left: 9px; }
   code { font-family: Consolas, "D2Coding", monospace; font-size: 12px; background: #f5f5f5; padding: 1px 4px; border-radius: 3px; }
-  .h { height: 34px; }
-  .capbox { border: 1px dashed #b0b0b0; border-radius: 6px; height: 150px; display: flex; align-items: center; justify-content: center; color: #9a9a9a; font-size: 12.5px; margin: 6px 0 12px; background: #fafafa; }
-  .note { font-size: 11.5px; color: #777; margin-top: 4px; }
+  pre { background: #1e2430; color: #e6edf3; border-radius: 6px; padding: 11px 13px; font-family: Consolas, "D2Coding", monospace; font-size: 12px; overflow-x: auto; }
+  .ok { color: #1a7f37; font-weight: 700; }
+  .cap { border: 1px solid #b9c0c8; border-radius: 4px; overflow: hidden; margin: 6px 0 2px; }
+  .cap img { width: 100%; display: block; }
+  .capc { font-size: 11.5px; color: #5f5f5f; margin: 0 0 12px; }
   .sign { margin-top: 26px; width: 340px; margin-left: auto; }
   .sign th { width: 84px; } .sign td { height: 42px; }
   @media print { body { background: #fff; padding: 0; } .sheet { border: none; box-shadow: none; } }
@@ -26,66 +28,76 @@
 <body>
 <div class="sheet">
   <h1>애플리케이션 배포 결과 보고서</h1>
-  <div class="subtitle">NCS 애플리케이션 배포(2001020214_23v6) &nbsp;|&nbsp; 과제 : S-Deploy</div>
+  <div class="subtitle">NCS 애플리케이션 배포(2001020214_23v6) &nbsp;|&nbsp; 과제 : S-Deploy </div>
 
   <table>
-    <tr><th class="lbl">과 제 명</th><td>S-Deploy 배포 파이프라인</td><th class="lbl">작 성 자</th><td></td><th class="lbl">작 성 일</th><td></td></tr>
-    <tr><th class="lbl">대상 환경</th><td>JDK 21 / Spring Boot 3.5 / Gradle</td><th class="lbl">검 토 자</th><td></td><th class="lbl">페 이 지</th><td>1 / 1</td></tr>
+    <tr><th class="lbl">과 제 명</th><td>S-Deploy 배포 파이프라인</td><th class="lbl">작 성 자</th><td>2 조</td><th class="lbl">작 성 일</th><td>2026-07-07</td></tr>
+    <tr><th class="lbl">대상 환경</th><td>JDK 21 / Spring Boot 3.5 / Gradle</td><th class="lbl">검 토 자</th><td>정우균</td><th class="lbl">페 이 지</th><td>1 / 1</td></tr>
   </table>
 
   <div class="sec">1. 배포 환경 구성 (능력단위요소 ①)</div>
   <table>
     <tr><th>항목</th><th>구성 내용</th></tr>
-    <tr><td class="lbl">런타임</td><td class="h"></td></tr>
-    <tr><td class="lbl">프로파일 / 포트</td><td class="h"></td></tr>
-    <tr><td class="lbl">빌드 산출물</td><td class="h"></td></tr>
-    <tr><td class="lbl">릴리스 보관</td><td class="h"></td></tr>
+    <tr><td class="lbl">런타임</td><td>JDK 21 · Spring Boot 3.5.x · Gradle</td></tr>
+    <tr><td class="lbl">프로파일 / 포트</td><td>dev = 8080 &nbsp;/&nbsp; prod = 9090 (<code>--spring.profiles.active=prod</code>)</td></tr>
+    <tr><td class="lbl">빌드 산출물</td><td><code>build/libs/app.jar</code> (bootJar 이름 고정)</td></tr>
+    <tr><td class="lbl">릴리스 보관</td><td><code>releases/app-1.0.0.jar</code> (롤백 대비)</td></tr>
   </table>
 
   <div class="sec">2. 소스 검증 결과 (능력단위요소 ②)</div>
   <table>
-    <tr><th class="lbl" style="width:150px">검증 명령</th><td class="h"></td></tr>
-    <tr><th class="lbl">결과</th><td class="h"></td></tr>
-    <tr><th class="lbl">환경설정 점검</th><td class="h"></td></tr>
+    <tr><th class="lbl" style="width:150px">검증 명령</th><td><code>./gradlew test</code></td></tr>
+    <tr><th class="lbl">결과</th><td><span class="ok">BUILD SUCCESSFUL</span> — HealthControllerTest 2건 통과 (헬스/버전 엔드포인트 정상)</td></tr>
+    <tr><th class="lbl">환경설정 점검</th><td>포트(8080/9090)·프로파일(dev/prod)·버전(1.0.0) 이 명세와 일치함</td></tr>
   </table>
 
   <div class="sec">3. 빌드 결과 (능력단위요소 ③)</div>
   <table>
-    <tr><th class="lbl" style="width:150px">빌드 명령</th><td class="h"></td></tr>
-    <tr><th class="lbl">산출물</th><td class="h"></td></tr>
-    <tr><th class="lbl">릴리스 보관</th><td class="h"></td></tr>
+    <tr><th class="lbl" style="width:150px">빌드 명령</th><td><code>./gradlew clean bootJar</code></td></tr>
+    <tr><th class="lbl">산출물</th><td><code>build/libs/app.jar</code> (약 23MB) 생성 <span class="ok">성공</span></td></tr>
+    <tr><th class="lbl">릴리스 보관</th><td><code>releases/app-1.0.0.jar</code> 사본 저장 완료</td></tr>
   </table>
+  <pre>&gt; Task :test        <span class="ok">BUILD SUCCESSFUL</span>
+&gt; Task :bootJar     build/libs/app.jar 생성</pre>
 
   <div class="sec">4. 배포 및 헬스체크 결과 (능력단위요소 ④)</div>
   <table>
-    <tr><th class="lbl" style="width:150px">실행 명령</th><td class="h"></td></tr>
-    <tr><th class="lbl">기동 확인</th><td class="h"></td></tr>
+    <tr><th class="lbl" style="width:150px">실행 명령</th><td><code>java -jar build/libs/app.jar --spring.profiles.active=prod</code></td></tr>
+    <tr><th class="lbl">기동 확인</th><td><code>Tomcat started on port 9090</code> · <code>Started DemoApplication</code></td></tr>
   </table>
-  <div class="capbox">[그림 1] /api/health 동작 화면 캡처 첨부</div>
-  <div class="capbox">[그림 2] /api/version 동작 화면 캡처 첨부</div>
-  <div class="capbox">[그림 3] /actuator/health 동작 화면 캡처 첨부</div>
+
+  <div class="cap"><img src="완성_00_기본페이지.png" alt="기본 페이지"></div>
+  <p class="capc">[그림 0] <code>http://localhost:9090/</code> — 배포 확인용 기본 페이지 (상태 UP·버전·프로파일 표시)</p>
+
+  <div class="cap"><img src="완성_01_health.png" alt="헬스체크"></div>
+  <p class="capc">[그림 1] <code>GET /api/health</code> → <code>{"status":"UP","version":"1.0.0","env":"production","profile":"prod"}</code></p>
+
+  <div class="cap"><img src="완성_02_version.png" alt="버전"></div>
+  <p class="capc">[그림 2] <code>GET /api/version</code> → <code>{"version":"1.0.0"}</code></p>
+
+  <div class="cap"><img src="완성_03_actuator.png" alt="actuator"></div>
+  <p class="capc">[그림 3] <code>GET /actuator/health</code> → <code>{"status":"UP", diskSpace/ping/ssl 모두 UP}</code></p>
 
   <div class="sec">5. 롤백 결과 (능력단위요소 ④)</div>
   <table>
-    <tr><th class="lbl" style="width:150px">롤백 사유(가정)</th><td class="h"></td></tr>
-    <tr><th class="lbl">롤백 명령</th><td class="h"></td></tr>
-    <tr><th class="lbl">복원 결과</th><td class="h"></td></tr>
-    <tr><th class="lbl">복원 확인</th><td class="h"></td></tr>
+    <tr><th class="lbl" style="width:150px">롤백 사유(가정)</th><td>배포본(app.jar) 어플리케이션 결함 상황</td></tr>
+    <tr><th class="lbl">롤백 명령</th><td><code>./scripts/rollback.sh 1.0.0</code></td></tr>
+    <tr><th class="lbl">복원 결과</th><td><code>releases/app-1.0.0.jar → build/libs/app.jar</code> 복원 <span class="ok">완료</span></td></tr>
+    <tr><th class="lbl">복원 확인</th><td>재실행 후 <code>/api/version</code> = <code>1.0.0</code> 으로 이전 버전 정상 복원 확인</td></tr>
   </table>
 
   <div class="sec">6. 종합 확인</div>
   <table>
     <tr><th style="width:60px">구분</th><th>확인 항목</th><th style="width:70px">결과</th></tr>
-    <tr><td class="lbl">①</td><td>배포 환경(빌드설정·프로파일·릴리스) 구성</td><td class="h"></td></tr>
-    <tr><td class="lbl">②</td><td>소스 검증(test 통과·환경설정 점검)</td><td></td></tr>
-    <tr><td class="lbl">③</td><td>빌드(app.jar 생성·릴리스 보관)</td><td></td></tr>
-    <tr><td class="lbl">④</td><td>배포(prod 실행)·헬스체크·롤백</td><td></td></tr>
+    <tr><td class="lbl">①</td><td>배포 환경(빌드설정·프로파일·릴리스) 구성</td><td style="text-align:center" class="ok">완료</td></tr>
+    <tr><td class="lbl">②</td><td>소스 검증(test 통과·환경설정 점검)</td><td style="text-align:center" class="ok">완료</td></tr>
+    <tr><td class="lbl">③</td><td>빌드(app.jar 생성·릴리스 보관)</td><td style="text-align:center" class="ok">완료</td></tr>
+    <tr><td class="lbl">④</td><td>배포(prod 실행)·헬스체크·롤백</td><td style="text-align:center" class="ok">완료</td></tr>
   </table>
-  <div class="note">※ 각 그림 자리에는 실제 실행·브라우저 동작 화면을 캡처해 붙인다.</div>
 
   <table class="sign">
-    <tr><th class="lbl">작성자</th><td></td></tr>
-    <tr><th class="lbl">검토자</th><td></td></tr>
+    <tr><th class="lbl">작성자</th><td>2조 (인)</td></tr>
+    <tr><th class="lbl">검토자</th><td>정우균 (인)</td></tr>
   </table>
 </div>
 </body>
