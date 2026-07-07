@@ -30,6 +30,7 @@ dependencies {
 //  - 배포 스크립트(scripts/*.sh)가 build/libs/app.jar 를 참조한다.
 bootJar {
 	// TODO: archiveFileName 을 지정하시오
+	archiveFileName = 'app.jar'
 }
 
 tasks.named('test') {
