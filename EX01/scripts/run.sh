@@ -12,3 +12,4 @@ fi
 
 echo "==> 프로파일=$PROFILE 로 실행합니다."
 # TODO(배포/실행): java -jar 로 $JAR 를 실행하되 --spring.profiles.active=$PROFILE 로 프로파일을 지정하시오.
+java -jar "$JAR" --spring.profiles.active="$PROFILE"
