@@ -26,13 +26,17 @@ public class HealthController {
     @GetMapping("/health")
     public Map<String, Object> health() {
         // TODO(배포 확인): status="UP", version, env, profile 을 Map 에 담아 반환하시오.
-        return null;
+        Map<String,Object> body = new LinkedHashMap<>();
+        body.put("status","UP"); body.put("version",version);
+        body.put("env",env); body.put("profile",profile);
+        return body;
     }
 
     // 롤백 확인용 — 현재 배포된 버전을 확인한다.
     @GetMapping("/version")
     public Map<String, String> version() {
         // TODO(롤백 확인): version 을 Map 에 담아 반환하시오.
-        return null;
+        Map<String,String> body = new LinkedHashMap<>();
+        body.put("version",version); return body;
     }
 }
