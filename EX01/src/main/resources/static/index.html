@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>S-Deploy</title>
+</head>
+<body>
+  <h1>S-Deploy</h1>
+  <p>애플리케이션 배포 실습 데모 페이지입니다.</p>
+  <p id="status">상태 확인 중...</p>
+
+  <h2>확인용 엔드포인트</h2>
+  <ul>
+    <li><a href="/api/health">/api/health</a></li>
+    <li><a href="/api/version">/api/version</a></li>
+    <li><a href="/actuator/health">/actuator/health</a></li>
+  </ul>
+
+  <hr>
+  <p><small>이 페이지가 보이면 애플리케이션이 정상 배포·기동된 것입니다.</small></p>
+
+  <script>
+    fetch('/api/health')
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        document.getElementById('status').textContent =
+          '상태: ' + d.status + ' / 버전: ' + d.version +
+          ' / 환경: ' + d.env + ' (' + d.profile + ')';
+      })
+      .catch(function () {
+        document.getElementById('status').textContent = '헬스체크 응답을 가져오지 못했습니다.';
+      });
+  </script>
+</body>
+</html>
